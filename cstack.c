@@ -60,21 +60,20 @@ unsigned int stack_size(const hstack_t hstack)
 void stack_push(const hstack_t hstack, const void* data_in, const unsigned int size)
 {
     if(!(stack_valid_handler(hstack)) &&
-        data_in != NULL)
+        data_in != NULL &&
+        size > 0)
     {
         stack_type new = malloc(sizeof(struct node) + size);     // выделяем память под элемент
         
         if (new != NULL)
         {
-            g_table.entries[hstack].reserved += size;         // увеличиваем размер стека
+            g_table.entries[hstack].reserved += 1;            // увеличиваем размер стека
             new->prev = g_table.entries[hstack].stack;        // Указываем на предыдущий узел
             new->size = size;                                 // Сохраняем размер данных
             g_table.entries[hstack].stack = new;              // обновляем вершину
             
             // Копируем данные в массив
-            if (data_in != NULL && size > 0) {
-                memcpy(new->data, data_in, size);
-            }
+            memcpy(new->data, data_in, size);
         }
 
     }
@@ -92,20 +91,24 @@ unsigned int stack_pop(const hstack_t hstack, void* data_out, const unsigned int
         stack_type top = g_table.entries[hstack].stack;          // вершина стека
         
         if (top != NULL)
-        {            
+        {
+            // проверка что размеры совпадают
+            if(top->size != size) return 0;
+
             // Копируем данные в массив
             if (data_out != NULL && size > 0) {
                 memcpy(data_out, top->data, size);            // копируем данные
-                return size;                                  // возвращаем количество записанных байт
 
                 // Обновляем вершину
                 g_table.entries[hstack].stack = top->prev;
 
                 // Изменяем размер стека
-                g_table.entries[hstack].reserved -= top->size;
+                g_table.entries[hstack].reserved -= 1;
 
                 // Убираем вершину
                 free(top);
+
+                return size;                                  // возвращаем количество записанных байт
             }
         }
     }
