@@ -77,10 +77,6 @@ void stack_push(const hstack_t hstack, const void* data_in, const unsigned int s
         }
 
     }
-    else
-    {
-        //Обозначить ошибку
-    }
 }
 
 unsigned int stack_pop(const hstack_t hstack, void* data_out, const unsigned int size)
@@ -111,10 +107,6 @@ unsigned int stack_pop(const hstack_t hstack, void* data_out, const unsigned int
                 return size;                                  // возвращаем количество записанных байт
             }
         }
-    }
-    else
-    {
-        //Обозначить ошибку
     }
     return 0;
 }
