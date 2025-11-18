@@ -5,6 +5,29 @@
 
 #define UNUSED(VAR) (void)(VAR)
 
+struct node
+{
+    struct node* prev;
+    unsigned int size;
+    char data[0];
+};
+
+typedef struct node* stack_type;
+
+struct stack_entry
+{
+    int reserved;
+    stack_type stack;
+};
+
+typedef struct stack_entry stack_entry_t;
+
+struct stack_entries_table
+{
+    unsigned int size;
+    stack_entry_t* entries;
+};
+
 struct stack_entries_table g_table = {0u, NULL};
 
 hstack_t stack_new(void)

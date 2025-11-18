@@ -5,29 +5,6 @@
 
 typedef int hstack_t;
 
-struct node
-{
-    struct node* prev;
-    unsigned int size;
-    char data[0];
-};
-
-typedef struct node* stack_type;
-
-struct stack_entry
-{
-    int reserved;
-    stack_type stack;
-};
-
-typedef struct stack_entry stack_entry_t;
-
-struct stack_entries_table
-{
-    unsigned int size;
-    stack_entry_t* entries;
-};
-
 // Создать новый стек.
 hstack_t stack_new(void);
 
