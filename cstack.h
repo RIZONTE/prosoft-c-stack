@@ -1,8 +1,6 @@
 #ifndef CSTACK_H
 #define CSTACK_H
 
-#include <stdio.h>
-
 typedef int hstack_t;
 
 // Создать новый стек.
